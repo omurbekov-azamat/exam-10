@@ -50,6 +50,26 @@ const fileDb = {
           }
       }
     },
+    async addComment(comment: CommentMutation) {
+        data.comments.push(comment);
+        await this.save();
+        return 'We got your comment for that post';
+    },
+    async getComments() {
+        return data.comments;
+    },
+    async deleteComment(id: string) {
+        const comment = data.comments.find(comment => comment.id === id)
+
+        if (comment) {
+            await fs.unlink(fileName);
+            data.comments = data.comments.filter((item) => item.id !== id);
+            await fs.writeFile(fileName, JSON.stringify(data));
+            return ('Deletion was successful');
+        } else {
+            return 'There is no comment with that id';
+        }
+    },
     async save() {
         await fs.writeFile(fileName, JSON.stringify(data));
     }
