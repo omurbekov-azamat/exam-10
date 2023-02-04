@@ -34,8 +34,10 @@ const fileDb = {
 
       if (item) {
           await fs.unlink(fileName);
-          const destDir = path.join(config.publicPath + '/' + item.image);
-          await fs.unlink(destDir);
+          if (item.image) {
+              const destDir = path.join(config.publicPath + '/' + item.image);
+              await fs.unlink(destDir);
+          }
           data.news = data.news.filter((article: NewsMutation) => article.id !== id);
           data.comments = data.comments.filter((comment:CommentMutation) => comment.news_id !== id);
           await fs.writeFile(fileName, JSON.stringify(data));
