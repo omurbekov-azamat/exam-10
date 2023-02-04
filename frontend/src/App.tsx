@@ -14,6 +14,9 @@ function App() {
                 <Route path='/news/:id' element={<OneArticle/>}/>
                 <Route path='/add-newPost' element={<PostForm/>}/>
             </Route>
+            <Route path='*' element={(
+                <h1>Not found!</h1>
+            )}/>
         </Routes>
     );
 }

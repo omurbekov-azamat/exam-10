@@ -6,10 +6,12 @@ import {Grid, TextField} from "@mui/material";
 import {LoadingButton} from "@mui/lab";
 import FileInput from "../components/FileInput/FileInput";
 import {SendPost} from "../types";
+import {useNavigate} from "react-router-dom";
 
 const PostForm = () => {
     const dispatch = useAppDispatch();
     const postLoading = useAppSelector(selectCreatePost);
+    const navigate = useNavigate();
 
     const [post, setPost] = useState<SendPost>({
         title: '',
@@ -31,15 +33,16 @@ const PostForm = () => {
 
     const submitFormHandler = async (e: React.FormEvent) => {
         e.preventDefault();
-        dispatch(createPost({
+        await dispatch(createPost({
             ...post,
             date: new Date().toISOString(),
         }));
-        setPost({
+        await setPost({
             title: '',
             content: '',
             image: null,
         });
+        await navigate('/news');
     };
 
     return (
